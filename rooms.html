@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="color-scheme" content="light dark">
+  <script>
+    (function() {
+      try {
+        const theme = localStorage.getItem('theme_preference') || 'system';
+        document.documentElement.setAttribute('data-theme', theme);
+        const resolved = theme === 'system'
+          ? (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark')
+          : theme;
+        const meta = document.querySelector('meta[name="color-scheme"]');
+        if (meta) meta.content = theme === 'system' ? 'light dark' : theme;
+      } catch (e) {}
+    })();
+  </script>
+  <title>Rooms, Dormitory & PG in Waidhan Singrauli | Hotel Waidhan BnB</title>
+  
+  <meta name="description" content="Explore best rooms, cheapest dormitory beds (₹349), cooler deluxe rooms (₹699), and VIP AC executive rooms (₹999) at Hotel Waidhan BnB Singrauli. Free Wi-Fi, 24/7 power backup, hygienic attached baths.">
+  <meta name="keywords" content="hotel rooms waidhan, cheapest dormitory waidhan, budget hotel room singrauli, ac room waidhan, pg in waidhan, lodge singrauli, hotel near waidhan bus stand">
+  <meta name="robots" content="index, follow">
+
+  <!-- Favicon & Fonts -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏨</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/auth.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Accommodations at Hotel Waidhan BnB",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Clean Single Dormitory Bed",
+        "description": "Clean individual bunk bed with locker, charging socket, and clean washroom access.",
+        "offers": { "@type": "Offer", "price": "349", "priceCurrency": "INR" }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Economy Non-AC Room",
+        "description": "Private budget room with queen bed, attached bathroom, and ceiling fan.",
+        "offers": { "@type": "Offer", "price": "499", "priceCurrency": "INR" }
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Deluxe Air-Cooler Room",
+        "description": "Spacious room with powerful dessert air cooler, LED TV, and high-speed Wi-Fi.",
+        "offers": { "@type": "Offer", "price": "699", "priceCurrency": "INR" }
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "Executive VIP AC Room",
+        "description": "Premium luxury room with silent split air conditioning, king mattress, and work desk.",
+        "offers": { "@type": "Offer", "price": "999", "priceCurrency": "INR" }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ========================================================================
+       GLOBAL HEADER & NAVBAR
+       ======================================================================== -->
+  <header class="header" id="main-header">
+    <div class="container header-container">
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand-logo" aria-label="Hotel Waidhan BnB Home">
+        <div class="logo-icon">
+          <i class="fas fa-hotel"></i>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Hotel Waidhan BnB</span>
+          <span class="brand-tagline">SINGRAULI • STAYS & DINE</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="nav-desktop" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="rooms.html" class="nav-link active">Rooms & Dorms</a>
+        <a href="about.html" class="nav-link">About Us</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="index.html#banquet" class="nav-link">Banquet</a>
+        <a href="index.html#restaurant" class="nav-link">Restaurant</a>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="header-actions">
+        <!-- Direct Call Reception Dropdown -->
+        <div class="call-dropdown-wrap" id="call-dropdown-wrap">
+          <button type="button" class="btn-call-desk" id="btn-call-desk" aria-expanded="false" title="Call Hotel Reception Lines">
+            <i class="fas fa-phone-alt"></i>
+            <span class="call-number">+91 78790 28316</span>
+            <i class="fas fa-chevron-down" style="font-size: 0.6rem; opacity: 0.7;"></i>
+          </button>
+          <div class="call-dropdown-menu" id="call-dropdown-menu">
+            <div class="call-dropdown-header">24/7 Front Desk Lines:</div>
+            <a href="tel:+917879028316" class="call-dropdown-item">
+              <i class="fas fa-phone"></i>
+              <div>
+                <strong>+91 78790 28316</strong>
+                <span class="role-tag">Line 1: Reception & Booking</span>
+              </div>
+            </a>
+            <a href="tel:+919770236735" class="call-dropdown-item">
+              <i class="fas fa-phone"></i>
+              <div>
+                <strong>+91 97702 36735</strong>
+                <span class="role-tag">Line 2: Manager & VIP Desk</span>
+              </div>
+            </a>
+            <a href="tel:+919109302812" class="call-dropdown-item">
+              <i class="fas fa-phone"></i>
+              <div>
+                <strong>+91 91093 02812</strong>
+                <span class="role-tag">Line 3: Banquet & Events</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Theme Switcher Dropdown (Light / Dark / System) -->
+        <div class="theme-dropdown-wrap" id="theme-dropdown-wrap">
+          <button type="button" class="btn-theme-dropdown" id="btn-theme-dropdown" aria-label="Toggle Display Theme" aria-expanded="false" title="Display Theme (Light, Dark, System)">
+            <i class="fas fa-moon" id="header-theme-icon"></i>
+            <span class="theme-text" id="header-theme-text">Theme</span>
+            <i class="fas fa-chevron-down" style="font-size: 0.58rem; opacity: 0.7;"></i>
+          </button>
+          <div class="theme-menu" id="theme-menu" role="menu">
+            <button type="button" class="theme-menu-item" data-theme="light" role="menuitem">
+              <i class="fas fa-sun" style="color: #f59e0b;"></i>
+              <span>Light</span>
+              <i class="fas fa-check check-icon"></i>
+            </button>
+            <button type="button" class="theme-menu-item active" data-theme="dark" role="menuitem">
+              <i class="fas fa-moon" style="color: #38bdf8;"></i>
+              <span>Dark</span>
+              <i class="fas fa-check check-icon"></i>
+            </button>
+            <button type="button" class="theme-menu-item" data-theme="system" role="menuitem">
+              <i class="fas fa-laptop" style="color: var(--accent);"></i>
+              <span>System</span>
+              <i class="fas fa-check check-icon"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Dynamic User Auth Nav Slot -->
+        <div class="auth-nav-slot">
+          <a href="login.html" class="btn-auth-nav">
+            <i class="far fa-user-circle"></i>
+            <span>Sign In</span>
+          </a>
+        </div>
+
+        <!-- Mobile Hamburger Button -->
+        <button class="btn-hamburger" id="btn-hamburger" aria-label="Toggle Navigation Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       MOBILE NAVIGATION DRAWER
+       ======================================================================== -->
+  <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop">
+    <aside class="mobile-drawer" aria-label="Mobile Navigation Drawer">
+      <div class="drawer-header">
+        <div class="brand-logo">
+          <div class="logo-icon" style="width: 34px; height: 34px; font-size: 1rem;">
+            <i class="fas fa-hotel"></i>
+          </div>
+          <div class="brand-text">
+            <span class="brand-name" style="font-size: 1rem;">Waidhan BnB</span>
+            <span class="brand-tagline" style="font-size: 0.58rem;">Waidhan, Singrauli (MP)</span>
+          </div>
+        </div>
+        <button class="drawer-close" id="drawer-close-btn" aria-label="Close Navigation Menu">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- User Auth Slot for Drawer -->
+      <div id="drawer-auth-slot"></div>
+
+      <nav class="drawer-nav-list">
+        <a href="index.html" class="drawer-nav-link"><i class="fas fa-home"></i> Home</a>
+        <a href="rooms.html" class="drawer-nav-link active"><i class="fas fa-bed"></i> Rooms & Dormitory</a>
+        <a href="about.html" class="drawer-nav-link"><i class="fas fa-info-circle"></i> About Us</a>
+        <a href="contact.html" class="drawer-nav-link"><i class="fas fa-map-marker-alt"></i> Contact & Location</a>
+        <a href="login.html" class="drawer-nav-link"><i class="fas fa-user-shield"></i> Guest Portal / Sign In</a>
+        <a href="index.html#banquet" class="drawer-nav-link"><i class="fas fa-glass-cheers"></i> Banquet & Events</a>
+        <a href="index.html#restaurant" class="drawer-nav-link"><i class="fas fa-utensils"></i> Restaurant & Dining</a>
+      </nav>
+
+      <!-- Theme Switcher for Mobile Drawer -->
+      <div class="drawer-theme-section">
+        <span class="drawer-theme-title"><i class="fas fa-circle-half-stroke"></i> Theme Appearance:</span>
+        <div class="drawer-theme-switcher">
+          <button type="button" class="drawer-theme-pill" data-theme="light">
+            <i class="fas fa-sun"></i> Light
+          </button>
+          <button type="button" class="drawer-theme-pill active" data-theme="dark">
+            <i class="fas fa-moon"></i> Dark
+          </button>
+          <button type="button" class="drawer-theme-pill" data-theme="system">
+            <i class="fas fa-laptop"></i> System
+          </button>
+        </div>
+      </div>
+
+      <div class="drawer-footer">
+        <div class="drawer-quick-contact">
+          <div class="drawer-contact-item">
+            <i class="fas fa-phone-alt"></i>
+            <a href="tel:+917879028316">+91 78790 28316 (Primary)</a>
+          </div>
+          <div class="drawer-contact-item">
+            <i class="fas fa-phone-alt"></i>
+            <a href="tel:+919770236735">+91 97702 36735 (Desk 2)</a>
+          </div>
+          <div class="drawer-contact-item">
+            <i class="fas fa-phone-alt"></i>
+            <a href="tel:+919109302812">+91 91093 02812 (Desk 3)</a>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ========================================================================
+       PAGE HERO BANNER
+       ======================================================================== -->
+  <section style="padding: 120px 0 50px; background: radial-gradient(circle at 50% 20%, rgba(217, 119, 6, 0.12), transparent 70%); text-align: center;">
+    <div class="container">
+      <div class="badge-gold" style="margin-bottom: 0.75rem;">
+        <i class="fas fa-tag"></i> Direct Booking Lowest Price Guarantee
+      </div>
+      <h1 style="font-size: clamp(2rem, 4vw, 3.2rem); font-family: var(--font-heading); color: var(--text-main); margin-bottom: 0.75rem;">
+        Rooms, Dormitories & PG Stays in Waidhan
+      </h1>
+      <p style="color: var(--text-muted); font-size: 1.05rem; max-width: 680px; margin: 0 auto 1.75rem; line-height: 1.6;">
+        From spotless budget dormitory beds at ₹349 to luxury Executive AC suites, find the perfect stay in Singrauli with 24/7 power backup, fast Wi-Fi, and 100% hygiene.
+      </p>
+
+      <!-- Category Filter Pills -->
+      <div class="room-filter-bar" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;">
+        <button class="filter-btn active" data-filter="all">All Accommodations</button>
+        <button class="filter-btn" data-filter="dormitory"><i class="fas fa-bed"></i> Dormitory Beds (₹349)</button>
+        <button class="filter-btn" data-filter="budget"><i class="fas fa-fan"></i> Budget & Cooler (₹599-₹849)</button>
+        <button class="filter-btn" data-filter="ac"><i class="fas fa-snowflake"></i> Executive AC (₹1299+)</button>
+        <button class="filter-btn" data-filter="pg"><i class="fas fa-house-user"></i> Monthly PG Stays</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       ROOMS & DORMITORIES CATALOG GRID
+       ======================================================================== -->
+  <section class="section" style="padding-top: 20px;">
+    <div class="container">
+      <div class="rooms-grid" id="rooms-grid-container">
+        
+        <!-- ROOM CARD 1: Dormitory Bed -->
+        <article class="room-card" data-category="dorm" data-room-id="dorm-single" data-price="349" data-room-name="Clean Single Dormitory Bed">
+          <div class="room-card-image-wrap">
+            <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=800&q=80" alt="Clean Dormitory in Waidhan Singrauli" class="room-card-img" loading="lazy">
+            <span class="room-badge badge-cheapest">⚡ Cheapest in Waidhan • ₹349</span>
+            <div class="room-rating-pill"><i class="fas fa-star"></i> 4.8 (840+ reviews)</div>
+          </div>
+          <div class="room-card-body">
+            <div class="room-header-row">
+              <h3 class="room-card-title">Clean Single Dormitory Bed</h3>
+              <div class="room-pricing">
+                <span class="price-val">₹349</span>
+                <span class="price-period">/ night</span>
+              </div>
+            </div>
+            <p class="room-card-desc">
+              Spotless bunk bed with orthopedic mattress, individual privacy curtain, personal secure steel locker, fast universal charging port, and access to 24/7 hot showers.
+            </p>
+            <div class="room-amenities-tags">
+              <span><i class="fas fa-wifi"></i> High-Speed Wi-Fi</span>
+              <span><i class="fas fa-bolt"></i> 24/7 Power</span>
+              <span><i class="fas fa-lock"></i> Secure Locker</span>
+              <span><i class="fas fa-shower"></i> Geyser Shower</span>
+              <span><i class="fas fa-fan"></i> Clean Ventilation</span>
+            </div>
+            <div class="room-card-footer">
+              <div class="room-perk-note">
+                <i class="fas fa-check-circle" style="color: var(--accent);"></i> Clean bedsheet & towel included
+              </div>
+              <button type="button" class="btn-primary btn-book-room" data-room-id="dorm-single" data-room-name="Clean Single Dormitory Bed" data-price="349">
+                <i class="fas fa-calendar-check"></i> Book for ₹349
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ROOM CARD 2: Economy Budget Non-AC Room -->
+        <article class="room-card" data-category="economy" data-room-id="economy-non-ac" data-price="499" data-room-name="Economy Non-AC Budget Room">
+          <div class="room-card-image-wrap">
+            <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80" alt="Economy Non-AC Room Waidhan" class="room-card-img" loading="lazy">
+            <span class="room-badge badge-popular">Best Value Single/Couple</span>
+            <div class="room-rating-pill"><i class="fas fa-star"></i> 4.7 (620+ reviews)</div>
+          </div>
+          <div class="room-card-body">
+            <div class="room-header-row">
+              <h3 class="room-card-title">Economy Non-AC Budget Room</h3>
+              <div class="room-pricing">
+                <span class="price-val">₹499</span>
+                <span class="price-period">/ night</span>
+              </div>
+            </div>
+            <p class="room-card-desc">
+              Private cozy room with comfortable double bed, clean attached bathroom with 24/7 running water, ceiling fan, work desk, and power backup.
+            </p>
+            <div class="room-amenities-tags">
+              <span><i class="fas fa-bed"></i> Double Bed</span>
+              <span><i class="fas fa-bath"></i> Attached Bath</span>
+              <span><i class="fas fa-wifi"></i> Fast Wi-Fi</span>
+              <span><i class="fas fa-bolt"></i> 24/7 Backup</span>
+              <span><i class="fas fa-concierge-bell"></i> Room Service</span>
+            </div>
+            <div class="room-card-footer">
+              <div class="room-perk-note">
+                <i class="fas fa-shield-alt" style="color: var(--accent);"></i> Fully sanitized before check-in
+              </div>
+              <button type="button" class="btn-primary btn-book-room" data-room-id="economy-non-ac" data-room-name="Economy Non-AC Budget Room" data-price="499">
+                <i class="fas fa-calendar-check"></i> Book for ₹499
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ROOM CARD 3: Deluxe Air-Cooler Room -->
+        <article class="room-card" data-category="cooler" data-room-id="deluxe-cooler" data-price="699" data-room-name="Deluxe Air-Cooler Room">
+          <div class="room-card-image-wrap">
+            <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80" alt="Deluxe Room with Cooler Waidhan Singrauli" class="room-card-img" loading="lazy">
+            <span class="room-badge badge-recommended">Top Choice for Families</span>
+            <div class="room-rating-pill"><i class="fas fa-star"></i> 4.9 (950+ reviews)</div>
+          </div>
+          <div class="room-card-body">
+            <div class="room-header-row">
+              <h3 class="room-card-title">Deluxe Air-Cooler Room</h3>
+              <div class="room-pricing">
+                <span class="price-val">₹699</span>
+                <span class="price-period">/ night</span>
+              </div>
+            </div>
+            <p class="room-card-desc">
+              Spacious deluxe bedroom with high-efficiency desert air cooler, plush queen mattress, wall-mounted 32" HD LED TV with satellite channels, and room intercom.
+            </p>
+            <div class="room-amenities-tags">
+              <span><i class="fas fa-wind"></i> Heavy-Duty Cooler</span>
+              <span><i class="fas fa-tv"></i> 32" LED TV</span>
+              <span><i class="fas fa-wifi"></i> High-Speed Wi-Fi</span>
+              <span><i class="fas fa-bath"></i> Western Bath</span>
+              <span><i class="fas fa-utensils"></i> Food on Order</span>
+            </div>
+            <div class="room-card-footer">
+              <div class="room-perk-note">
+                <i class="fas fa-coffee" style="color: var(--accent);"></i> Complimentary morning chai
+              </div>
+              <button type="button" class="btn-primary btn-book-room" data-room-id="deluxe-cooler" data-room-name="Deluxe Air-Cooler Room" data-price="699">
+                <i class="fas fa-calendar-check"></i> Book for ₹699
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ROOM CARD 4: Executive VIP AC Room -->
+        <article class="room-card" data-category="ac" data-room-id="executive-ac" data-price="999" data-room-name="Executive VIP AC Room">
+          <div class="room-card-image-wrap">
+            <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=800&q=80" alt="Executive AC Room Waidhan Singrauli" class="room-card-img" loading="lazy">
+            <span class="room-badge badge-premium">⭐ VIP Executive Suite</span>
+            <div class="room-rating-pill"><i class="fas fa-star"></i> 5.0 (1,120+ reviews)</div>
+          </div>
+          <div class="room-card-body">
+            <div class="room-header-row">
+              <h3 class="room-card-title">Executive VIP AC Room</h3>
+              <div class="room-pricing">
+                <span class="price-val">₹999</span>
+                <span class="price-period">/ night</span>
+              </div>
+            </div>
+            <p class="room-card-desc">
+              Premium air-conditioned luxury suite engineered for corporate executives, plant consultants (NTPC/NCL), and discerning travelers. Includes silent Daikin split AC, work desk, and 43" Smart TV.
+            </p>
+            <div class="room-amenities-tags">
+              <span><i class="fas fa-snowflake"></i> Split AC</span>
+              <span><i class="fas fa-tv"></i> 43" Smart TV</span>
+              <span><i class="fas fa-laptop"></i> Ergonomic Desk</span>
+              <span><i class="fas fa-hot-tub"></i> Geyser & Toiletries</span>
+              <span><i class="fas fa-glass-whiskey"></i> Electric Kettle</span>
+            </div>
+            <div class="room-card-footer">
+              <div class="room-perk-note">
+                <i class="fas fa-crown" style="color: var(--accent);"></i> Express check-in & priority room service
+              </div>
+              <button type="button" class="btn-primary btn-book-room" data-room-id="executive-ac" data-room-name="Executive VIP AC Room" data-price="999">
+                <i class="fas fa-calendar-check"></i> Book for ₹999
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ROOM CARD 5: Monthly PG / Long Stay Accommodations -->
+        <article class="room-card" data-category="pg" data-room-id="monthly-pg" data-price="4500" data-room-name="Monthly PG & Corporate Long Stay">
+          <div class="room-card-image-wrap">
+            <img src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=800&q=80" alt="Monthly PG in Waidhan Singrauli" class="room-card-img" loading="lazy">
+            <span class="room-badge badge-pg">Monthly Packages • From ₹4,500</span>
+            <div class="room-rating-pill"><i class="fas fa-star"></i> 4.8 (310+ long stays)</div>
+          </div>
+          <div class="room-card-body">
+            <div class="room-header-row">
+              <h3 class="room-card-title">Monthly PG & Long Stay Package</h3>
+              <div class="room-pricing">
+                <span class="price-val">₹4,500</span>
+                <span class="price-period">/ month</span>
+              </div>
+            </div>
+            <p class="room-card-desc">
+              Ideal for NTPC engineers, NCL contractors, bank officials, medical representatives, and students. Includes 24/7 power backup, unlimited Wi-Fi, daily housekeeping, and optional homestyle tiffin meal plans.
+            </p>
+            <div class="room-amenities-tags">
+              <span><i class="fas fa-calendar-alt"></i> Monthly Rent</span>
+              <span><i class="fas fa-broom"></i> Daily Housekeeping</span>
+              <span><i class="fas fa-utensils"></i> Homestyle Thali</span>
+              <span><i class="fas fa-shield-alt"></i> CCTV 24/7</span>
+              <span><i class="fas fa-tshirt"></i> Laundry Facility</span>
+            </div>
+            <div class="room-card-footer">
+              <div class="room-perk-note">
+                <i class="fas fa-handshake" style="color: var(--accent);"></i> Zero brokerage • Direct hotel billing
+              </div>
+              <button type="button" class="btn-primary btn-book-room" data-room-id="monthly-pg" data-room-name="Monthly PG & Corporate Long Stay" data-price="4500">
+                <i class="fas fa-phone-alt"></i> Enquire PG Stay
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       TRANSPARENT TARIFF COMPARISON TABLE
+       ======================================================================== -->
+  <section class="section" style="background: var(--bg-card); padding: 60px 0;">
+    <div class="container">
+      <div class="section-title-wrap text-center" style="margin-bottom: 2.5rem;">
+        <span class="section-subtitle">Transparent Pricing</span>
+        <h2 class="section-title">Compare All Room Types at Hotel Waidhan BnB</h2>
+        <p class="section-desc">No hidden fees, no surge pricing, and no surprise charges at reception.</p>
+      </div>
+
+      <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+        <table class="bookings-table" style="min-width: 650px; background: var(--bg-main); border-radius: 12px; overflow: hidden;">
+          <thead>
+            <tr>
+              <th style="padding: 1rem;">Feature / Inclusions</th>
+              <th style="padding: 1rem; text-align: center;">Dormitory Bed<br><strong style="color: var(--accent);">₹349/day</strong></th>
+              <th style="padding: 1rem; text-align: center;">Economy Non-AC<br><strong style="color: var(--accent);">₹499/day</strong></th>
+              <th style="padding: 1rem; text-align: center;">Deluxe Cooler<br><strong style="color: var(--accent);">₹699/day</strong></th>
+              <th style="padding: 1rem; text-align: center;">Executive AC<br><strong style="color: var(--accent);">₹999/day</strong></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Occupancy Type</strong></td>
+              <td style="text-align: center;">1 Person</td>
+              <td style="text-align: center;">1 - 2 Persons</td>
+              <td style="text-align: center;">1 - 3 Persons</td>
+              <td style="text-align: center;">1 - 3 Persons</td>
+            </tr>
+            <tr>
+              <td><strong>Cooling / Climate</strong></td>
+              <td style="text-align: center;">Ceiling Fan</td>
+              <td style="text-align: center;">Ceiling Fan</td>
+              <td style="text-align: center;">Desert Cooler</td>
+              <td style="text-align: center;"><span style="color: var(--accent); font-weight: 700;">Split AC</span></td>
+            </tr>
+            <tr>
+              <td><strong>Bathroom</strong></td>
+              <td style="text-align: center;">Shared Clean Bath</td>
+              <td style="text-align: center;">Private Attached</td>
+              <td style="text-align: center;">Private Attached</td>
+              <td style="text-align: center;">Luxury Western Attached</td>
+            </tr>
+            <tr>
+              <td><strong>24/7 Power Backup</strong></td>
+              <td style="text-align: center;">✓ Included</td>
+              <td style="text-align: center;">✓ Included</td>
+              <td style="text-align: center;">✓ Included</td>
+              <td style="text-align: center;">✓ Full Gen-Set Inverter</td>
+            </tr>
+            <tr>
+              <td><strong>High-Speed Wi-Fi</strong></td>
+              <td style="text-align: center;">✓ 100 Mbps</td>
+              <td style="text-align: center;">✓ 100 Mbps</td>
+              <td style="text-align: center;">✓ 100 Mbps</td>
+              <td style="text-align: center;">✓ Ultra-Fast Dedicated</td>
+            </tr>
+            <tr>
+              <td><strong>Television (LED)</strong></td>
+              <td style="text-align: center;">Lobby Lounge TV</td>
+              <td style="text-align: center;">—</td>
+              <td style="text-align: center;">32" LED TV</td>
+              <td style="text-align: center;">43" Smart LED TV</td>
+            </tr>
+            <tr>
+              <td><strong>Room Service & Dining</strong></td>
+              <td style="text-align: center;">Dining Hall</td>
+              <td style="text-align: center;">In-Room Service</td>
+              <td style="text-align: center;">In-Room Service</td>
+              <td style="text-align: center;">Priority 24/7 Room Service</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       FAQ SECTION
+       ======================================================================== -->
+  <section class="section" style="padding: 60px 0;">
+    <div class="container" style="max-width: 800px;">
+      <div class="section-title-wrap text-center" style="margin-bottom: 2rem;">
+        <span class="section-subtitle">Help & Policies</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+      </div>
+
+      <div class="faq-accordion">
+        <details class="faq-item" open>
+          <summary class="faq-question">
+            <span>What are the check-in and check-out timings?</span>
+            <i class="fas fa-chevron-down"></i>
+          </summary>
+          <div class="faq-answer">
+            <p>Our standard check-in is 12:00 PM and check-out is 11:00 AM. Early check-in or late check-out is happily accommodated subject to room availability; simply give us a quick call at +91 78790 28316 before arrival.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>Is Hotel Waidhan BnB couple-friendly and safe for solo travelers?</span>
+            <i class="fas fa-chevron-down"></i>
+          </summary>
+          <div class="faq-answer">
+            <p>Yes, 100%! We welcome all guests above 18 years of age with valid government photo identification (Aadhaar Card, Driving License, Voter ID, or Passport). We maintain strict privacy, 24/7 CCTV security, and zero disturbance.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>Do you offer GST corporate invoices for plant and company reimbursements?</span>
+            <i class="fas fa-chevron-down"></i>
+          </summary>
+          <div class="faq-answer">
+            <p>Yes, we provide official GST-compliant tax invoices for corporate clients visiting NTPC Vindhyanagar, Northern Coalfields Ltd (NCL), Reliance Sasan, Essar, and government departments.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>What payment methods are accepted at the hotel?</span>
+            <i class="fas fa-chevron-down"></i>
+          </summary>
+          <div class="faq-answer">
+            <p>We accept all standard payment modes including UPI (Google Pay, PhonePe, Paytm), Cash, Debit/Credit Cards, and Corporate Net Banking.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       FOOTER
+       ======================================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="brand-logo" style="margin-bottom: 1rem;">
+            <div class="logo-icon"><i class="fas fa-hotel"></i></div>
+            <div class="brand-text">
+              <span class="brand-name">Hotel Waidhan BnB</span>
+              <span class="brand-tagline">Waidhan, Singrauli (MP)</span>
+            </div>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); max-width: 320px; line-height: 1.6;">
+            Premier budget, VIP and corporate accommodation in Waidhan Singrauli. Spotless hygiene, warm Indian hospitality, 24/7 power backup, and high-speed Wi-Fi.
+          </p>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="rooms.html">Rooms & Dormitories</a></li>
+            <li><a href="about.html">About Hotel</a></li>
+            <li><a href="contact.html">Contact Reception</a></li>
+            <li><a href="login.html">Sign In / Register</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Contact Reception</h4>
+          <ul class="footer-links">
+            <li><i class="fas fa-phone" style="color: var(--accent);"></i> +91 78790 28316</li>
+            <li><i class="fas fa-phone" style="color: var(--accent);"></i> +91 97702 36735</li>
+            <li><i class="fas fa-phone" style="color: var(--accent);"></i> +91 91093 02812</li>
+            <li><i class="fas fa-map-marker-alt" style="color: var(--accent);"></i> Near Waidhan Bus Stand, Singrauli MP</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Hotel Waidhan BnB. All Rights Reserved. Clean & Safe Hotel in Waidhan, Singrauli.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       FLOATING SOCIAL MEDIA DOCK (YouTube, Instagram, Facebook - Left Side)
+       ======================================================================== -->
+  <aside class="floating-social-dock" aria-label="Official Social Channels">
+    <a href="https://www.youtube.com/@HotelWaidhanBnB" target="_blank" rel="noopener noreferrer" class="social-dock-btn youtube" title="Watch on YouTube" aria-label="YouTube">
+      <i class="fab fa-youtube"></i>
+      <span class="social-tooltip">YouTube</span>
+    </a>
+    <a href="https://www.instagram.com/hotelwaidhanbnb" target="_blank" rel="noopener noreferrer" class="social-dock-btn instagram" title="Follow on Instagram" aria-label="Instagram">
+      <i class="fab fa-instagram"></i>
+      <span class="social-tooltip">Instagram</span>
+    </a>
+    <a href="https://www.facebook.com/hotelwaidhanbnb" target="_blank" rel="noopener noreferrer" class="social-dock-btn facebook" title="Connect on Facebook" aria-label="Facebook">
+      <i class="fab fa-facebook-f"></i>
+      <span class="social-tooltip">Facebook</span>
+    </a>
+  </aside>
+
+  <!-- ========================================================================
+       FLOATING RIGHT-SIDE BUTTONS (WhatsApp & Pooja Sharma Concierge)
+       ======================================================================== -->
+  <!-- Floating Right-Side WhatsApp Button -->
+  <a href="https://wa.me/917879028316?text=Hello%20Hotel%20Waidhan%20BnB%2C%20I%20want%20to%20book%20a%20room." target="_blank" rel="noopener" class="floating-whatsapp-btn" aria-label="Chat directly on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+    <span class="whatsapp-tooltip">Chat on WhatsApp</span>
+  </a>
+
+  <!-- Floating Staff Chat Button (Pooja Sharma - Right Side) -->
+  <button type="button" class="floating-staff-btn" id="btn-floating-staff-chat" aria-label="Open Staff Concierge Chat with Pooja Sharma">
+    <div class="staff-btn-avatar-wrap">
+      <img src="assets/staff-pooja.jpg" alt="Pooja Sharma - Hotel Waidhan Front Desk" class="staff-btn-avatar-img">
+      <span class="staff-btn-online-badge"></span>
+    </div>
+    <div class="staff-btn-content">
+      <span class="staff-btn-title">Chat with Pooja</span>
+      <span class="staff-btn-status"><span class="dot-live"></span> Front Desk • Online</span>
+    </div>
+  </button>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="bottom-nav" aria-label="Mobile Bottom Navigation">
+    <a href="index.html" class="bottom-nav-item">
+      <i class="fas fa-home"></i>
+      <span>Home</span>
+    </a>
+    <a href="rooms.html" class="bottom-nav-item active">
+      <i class="fas fa-bed"></i>
+      <span>Rooms</span>
+    </a>
+    <a href="rooms.html" class="bottom-nav-item center-action">
+      <div class="action-circle">
+        <i class="fas fa-calendar-check"></i>
+      </div>
+      <span>Book</span>
+    </a>
+    <a href="contact.html" class="bottom-nav-item">
+      <i class="fas fa-map-marker-alt"></i>
+      <span>Contact</span>
+    </a>
+    <a href="login.html" class="bottom-nav-item" id="bottom-nav-auth-item">
+      <i class="far fa-user-circle"></i>
+      <span>Sign In</span>
+    </a>
+  </nav>
+
+  <!-- ========================================================================
+       BOOKING MODAL DIALOG
+       ======================================================================== -->
+  <div class="booking-modal-backdrop" id="booking-modal-backdrop">
+    <div class="booking-modal" role="dialog" aria-modal="true" aria-labelledby="modal-room-title">
+      <div class="booking-modal-header">
+        <div>
+          <h3 id="modal-room-title" style="color: #fff; font-size: 1.25rem; font-family: var(--font-heading);">
+            Instant Booking Voucher
+          </h3>
+          <span id="modal-room-subtitle" style="font-size: 0.82rem; color: var(--accent);">Hotel Waidhan BnB • Direct Tariff Guaranteed</span>
+        </div>
+        <button id="modal-close-btn" class="modal-close" aria-label="Close Booking Dialog">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="booking-modal-body">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+          <div class="form-group">
+            <label class="form-label">Check-In</label>
+            <input type="date" id="modal-checkin" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Check-Out</label>
+            <input type="date" id="modal-checkout" class="form-input">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+          <div class="form-group">
+            <label class="form-label">Your Name</label>
+            <input type="text" id="modal-guest-name" class="form-input" placeholder="e.g. Amit Kumar" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mobile Number</label>
+            <input type="tel" id="modal-guest-phone" class="form-input" placeholder="+91 98XXXXXXXX" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Number of Guests</label>
+          <select id="modal-guests-count" class="form-select">
+            <option value="1">1 Person</option>
+            <option value="2" selected>2 Persons</option>
+            <option value="3">3 Persons</option>
+            <option value="4+">4+ Persons</option>
+          </select>
+        </div>
+
+        <div class="booking-summary-box">
+          <div class="summary-row">
+            <span>Duration:</span>
+            <strong id="summary-nights" style="color: #fff;">1 Night(s)</strong>
+          </div>
+          <div class="summary-row">
+            <span>Room Tariff:</span>
+            <span id="summary-base-price">₹0</span>
+          </div>
+          <div class="summary-row">
+            <span>Taxes & GST:</span>
+            <span id="summary-gst">₹0</span>
+          </div>
+          <div class="summary-row total">
+            <span>Total Payable at Hotel:</span>
+            <span id="summary-total" style="color: var(--accent);">₹0</span>
+          </div>
+        </div>
+
+        <div class="booking-actions-row">
+          <button type="button" id="btn-confirm-whatsapp" class="btn-whatsapp-confirm">
+            <i class="fab fa-whatsapp" style="font-size: 1.1rem;"></i> Book via WhatsApp
+          </button>
+          <button type="button" id="btn-confirm-direct" class="btn-primary">
+            <i class="fas fa-check-circle"></i> Confirm Voucher
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

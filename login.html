@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="color-scheme" content="light dark">
+  <script>
+    (function() {
+      try {
+        const theme = localStorage.getItem('theme_preference') || 'system';
+        document.documentElement.setAttribute('data-theme', theme);
+        const resolved = theme === 'system'
+          ? (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark')
+          : theme;
+        const meta = document.querySelector('meta[name="color-scheme"]');
+        if (meta) meta.content = theme === 'system' ? 'light dark' : theme;
+      } catch (e) {}
+    })();
+  </script>
+  <title>Sign In & Register | Hotel Waidhan BnB Guest Portal</title>
+  
+  <meta name="description" content="Sign in or create an account with Hotel Waidhan BnB. Enjoy 10% direct booking discount, manage your reservations, and unlock instant VIP perks in Waidhan, Singrauli.">
+  <meta name="robots" content="index, follow">
+
+  <!-- Favicon & Fonts -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏨</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Master & Auth Stylesheets -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       GLOBAL HEADER & NAVBAR
+       ======================================================================== -->
+  <header class="header" id="main-header">
+    <div class="container header-container">
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand-logo" aria-label="Hotel Waidhan BnB Home">
+        <div class="logo-icon">
+          <i class="fas fa-hotel"></i>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Hotel Waidhan BnB</span>
+          <span class="brand-tagline">SINGRAULI • STAYS & DINE</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="nav-desktop" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="rooms.html" class="nav-link">Rooms & Dorms</a>
+        <a href="about.html" class="nav-link">About Us</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="header-actions">
+        <!-- Direct Call Reception Dropdown -->
+        <div class="call-dropdown-wrap" id="call-dropdown-wrap">
+          <button type="button" class="btn-call-desk" id="btn-call-desk" aria-expanded="false" title="Call Hotel Reception Lines">
+            <i class="fas fa-phone-alt"></i>
+            <span class="call-number">+91 78790 28316</span>
+            <i class="fas fa-chevron-down" style="font-size: 0.6rem; opacity: 0.7;"></i>
+          </button>
+          <div class="call-dropdown-menu" id="call-dropdown-menu">
+            <div class="call-dropdown-header">24/7 Front Desk Lines:</div>
+            <a href="tel:+917879028316" class="call-dropdown-item">
+              <i class="fas fa-phone"></i>
+              <div>
+                <strong>+91 78790 28316</strong>
+                <span class="role-tag">Line 1: Reception & Booking</span>
+              </div>
+            </a>
+            <a href="tel:+919770236735" class="call-dropdown-item">
+              <i class="fas fa-phone"></i>
+              <div>
+                <strong>+91 97702 36735</strong>
+                <span class="role-tag">Line 2: Manager & VIP Desk</span>
+              </div>
+            </a>
+            <a href="tel:+919109302812" class="call-dropdown-item">
+              <i class="fas fa-phone"></i>
+              <div>
+                <strong>+91 91093 02812</strong>
+                <span class="role-tag">Line 3: Banquet & Events</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Theme Switcher Dropdown (Light / Dark / System) -->
+        <div class="theme-dropdown-wrap" id="theme-dropdown-wrap">
+          <button type="button" class="btn-theme-dropdown" id="btn-theme-dropdown" aria-label="Toggle Display Theme" aria-expanded="false" title="Display Theme (Light, Dark, System)">
+            <i class="fas fa-moon" id="header-theme-icon"></i>
+            <span class="theme-text" id="header-theme-text">Theme</span>
+            <i class="fas fa-chevron-down" style="font-size: 0.58rem; opacity: 0.7;"></i>
+          </button>
+          <div class="theme-menu" id="theme-menu" role="menu">
+            <button type="button" class="theme-menu-item" data-theme="light" role="menuitem">
+              <i class="fas fa-sun" style="color: #f59e0b;"></i>
+              <span>Light</span>
+              <i class="fas fa-check check-icon"></i>
+            </button>
+            <button type="button" class="theme-menu-item active" data-theme="dark" role="menuitem">
+              <i class="fas fa-moon" style="color: #38bdf8;"></i>
+              <span>Dark</span>
+              <i class="fas fa-check check-icon"></i>
+            </button>
+            <button type="button" class="theme-menu-item" data-theme="system" role="menuitem">
+              <i class="fas fa-laptop" style="color: var(--accent);"></i>
+              <span>System</span>
+              <i class="fas fa-check check-icon"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Dynamic User Auth Nav Slot -->
+        <div class="auth-nav-slot">
+          <a href="login.html" class="btn-auth-nav active">
+            <i class="far fa-user-circle"></i>
+            <span>Sign In</span>
+          </a>
+        </div>
+
+        <!-- Book Direct CTA -->
+        <a href="rooms.html" class="btn-primary" style="display: none; @media(min-width: 992px){display: inline-flex;}">
+          <i class="fas fa-calendar-check"></i> Book Direct
+        </a>
+        
+        <!-- Mobile Hamburger Button -->
+        <button class="btn-hamburger" id="btn-hamburger" aria-label="Toggle Navigation Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       MOBILE NAVIGATION DRAWER
+       ======================================================================== -->
+  <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop">
+    <aside class="mobile-drawer" aria-label="Mobile Navigation Drawer">
+      <div class="drawer-header">
+        <div class="brand-logo">
+          <div class="logo-icon" style="width: 34px; height: 34px; font-size: 1rem;">
+            <i class="fas fa-hotel"></i>
+          </div>
+          <div class="brand-text">
+            <span class="brand-name" style="font-size: 1rem;">Waidhan BnB</span>
+            <span class="brand-tagline" style="font-size: 0.58rem;">Waidhan, Singrauli (MP)</span>
+          </div>
+        </div>
+        <button class="drawer-close" id="drawer-close-btn" aria-label="Close Navigation Menu">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- User Auth Slot for Drawer -->
+      <div id="drawer-auth-slot"></div>
+
+      <nav class="drawer-nav-list">
+        <a href="index.html" class="drawer-nav-link"><i class="fas fa-home"></i> Home</a>
+        <a href="rooms.html" class="drawer-nav-link"><i class="fas fa-bed"></i> Rooms & Dormitory</a>
+        <a href="about.html" class="drawer-nav-link"><i class="fas fa-info-circle"></i> About Us</a>
+        <a href="contact.html" class="drawer-nav-link"><i class="fas fa-map-marker-alt"></i> Contact & Location</a>
+        <a href="login.html" class="drawer-nav-link active"><i class="fas fa-user-shield"></i> Guest Portal</a>
+      </nav>
+
+      <!-- Theme Switcher for Mobile Drawer -->
+      <div class="drawer-theme-section">
+        <span class="drawer-theme-title"><i class="fas fa-circle-half-stroke"></i> Theme Appearance:</span>
+        <div class="drawer-theme-switcher">
+          <button type="button" class="drawer-theme-pill" data-theme="light">
+            <i class="fas fa-sun"></i> Light
+          </button>
+          <button type="button" class="drawer-theme-pill active" data-theme="dark">
+            <i class="fas fa-moon"></i> Dark
+          </button>
+          <button type="button" class="drawer-theme-pill" data-theme="system">
+            <i class="fas fa-laptop"></i> System
+          </button>
+        </div>
+      </div>
+
+      <div class="drawer-footer">
+        <div class="drawer-quick-contact">
+          <div class="drawer-contact-item">
+            <i class="fas fa-phone-alt"></i>
+            <a href="tel:+917879028316">+91 78790 28316</a>
+          </div>
+          <div class="drawer-contact-item">
+            <i class="fab fa-whatsapp"></i>
+            <a href="https://wa.me/917879028316" target="_blank" rel="noopener">WhatsApp Concierge</a>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ========================================================================
+       MAIN AUTHENTICATION SECTION (Sign In / Register)
+       ======================================================================== -->
+  <main class="auth-page-section">
+    <div class="auth-card-container" id="auth-card-container">
+      
+      <!-- Card Header -->
+      <div class="auth-card-header">
+        <div class="auth-brand-badge">
+          <i class="fas fa-shield-alt"></i> Official Guest Portal
+        </div>
+        <h1 class="auth-card-title">Welcome to Waidhan BnB</h1>
+        <p class="auth-card-subtitle">Sign in or register to unlock instant 10% direct booking discount and express check-in.</p>
+      </div>
+
+      <!-- Tab Switcher: Sign In vs Mobile OTP vs Create Account -->
+      <div class="auth-tabs-header">
+        <button type="button" class="auth-tab-btn active" id="tab-btn-signin">
+          <i class="fas fa-lock"></i> Sign In
+        </button>
+        <button type="button" class="auth-tab-btn" id="tab-btn-otp">
+          <i class="fas fa-mobile-alt"></i> Mobile OTP
+        </button>
+        <button type="button" class="auth-tab-btn" id="tab-btn-signup">
+          <i class="fas fa-user-plus"></i> Create Account
+        </button>
+      </div>
+
+      <!-- Social Authentication Buttons (Google & Apple) -->
+      <div class="social-auth-stack">
+        <!-- Continue with Google Button -->
+        <button type="button" class="btn-social-auth google" id="btn-auth-google" title="Sign in with your Google account">
+          <div class="social-icon">
+            <svg viewBox="0 0 48 48" width="18" height="18">
+              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+              <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+            </svg>
+          </div>
+          <span>Continue with Google</span>
+        </button>
+
+        <!-- Continue with Apple Button -->
+        <button type="button" class="btn-social-auth apple" id="btn-auth-apple" title="Sign in with your Apple ID">
+          <div class="social-icon">
+            <i class="fab fa-apple" style="font-size: 1.15rem;"></i>
+          </div>
+          <span>Continue with Apple</span>
+        </button>
+      </div>
+
+      <!-- Divider -->
+      <div class="auth-divider">
+        <span>or sign in with credentials</span>
+      </div>
+
+      <!-- 1. SIGN IN FORM -->
+      <form id="form-signin" class="auth-form">
+        <div class="form-group">
+          <label class="form-label" for="signin-identifier">Email or Phone Number</label>
+          <div class="input-with-icon-wrap">
+            <i class="fas fa-envelope input-lead-icon"></i>
+            <input type="text" id="signin-identifier" class="form-input" placeholder="name@example.com or mobile" required autocomplete="username">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="signin-password">Password</label>
+          <div class="input-with-icon-wrap">
+            <i class="fas fa-lock input-lead-icon"></i>
+            <input type="password" id="signin-password" class="form-input" placeholder="Enter your password" required autocomplete="current-password">
+            <button type="button" class="btn-toggle-password" data-target="signin-password" aria-label="Toggle password visibility">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="auth-form-meta">
+          <label class="auth-checkbox-label">
+            <input type="checkbox" id="signin-remember" checked>
+            <span>Remember me</span>
+          </label>
+          <a href="#" class="auth-forgot-link" onclick="event.preventDefault(); showToast('Password reset link has been dispatched to your contact details.', 'info');">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; padding: 0.8rem 1.25rem; font-size: 0.95rem; justify-content: center;">
+          <i class="fas fa-sign-in-alt"></i> Sign In to Account
+        </button>
+
+        <p style="text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">
+          Want instant login? <a href="#" onclick="event.preventDefault(); document.getElementById('tab-btn-otp').click();" style="color: var(--accent); font-weight: 700;">Login with Mobile OTP</a>
+        </p>
+      </form>
+
+      <!-- 2. MOBILE OTP LOGIN FORM -->
+      <form id="form-otp" class="auth-form" style="display: none;">
+        <div class="form-group">
+          <label class="form-label" for="otp-mobile-input">Enter 10-Digit Mobile Number</label>
+          <div class="input-with-icon-wrap" style="position: relative;">
+            <span style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-weight: 700; color: var(--accent); font-size: 0.9rem;">+91</span>
+            <input type="tel" id="otp-mobile-input" class="form-input" style="padding-left: 50px; padding-right: 100px;" placeholder="98XXXXXXXX" pattern="[0-9]{10}" maxlength="10">
+            <button type="button" id="btn-request-otp" class="btn-primary" style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); padding: 0.35rem 0.75rem; font-size: 0.76rem; border-radius: 6px;">
+              Send OTP
+            </button>
+          </div>
+        </div>
+
+        <!-- Simulated OTP Notice Box -->
+        <div id="otp-hint-banner" style="display: none; background: rgba(217, 119, 6, 0.12); border: 1px dashed var(--accent); border-radius: 8px; padding: 0.75rem; margin-bottom: 1rem; font-size: 0.84rem; color: var(--text-main);">
+          <i class="fas fa-shield-alt" style="color: var(--accent); margin-right: 6px;"></i>
+          <span>Verification Code sent! Your OTP is: <strong id="generated-otp-display" style="letter-spacing: 3px; color: var(--accent); font-size: 1.15rem; font-family: monospace;">4868</strong></span>
+        </div>
+
+        <div class="form-group" id="otp-code-group" style="display: none;">
+          <label class="form-label" for="otp-code-input">Enter 4-Digit OTP</label>
+          <div class="input-with-icon-wrap">
+            <i class="fas fa-key input-lead-icon"></i>
+            <input type="text" id="otp-code-input" class="form-input" placeholder="Enter 4-digit code" maxlength="4">
+          </div>
+        </div>
+
+        <button type="submit" id="btn-verify-otp-submit" class="btn-primary" style="width: 100%; padding: 0.8rem 1.25rem; font-size: 0.95rem; justify-content: center; display: none;">
+          <i class="fas fa-check-circle"></i> Verify OTP & Log In
+        </button>
+
+        <p style="text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">
+          New guest? <a href="#" onclick="event.preventDefault(); document.getElementById('tab-btn-signup').click();" style="color: var(--accent); font-weight: 700;">Create Account</a>
+        </p>
+      </form>
+
+      <!-- 3. CREATE ACCOUNT FORM -->
+      <form id="form-signup" class="auth-form" style="display: none;">
+        <div class="form-group">
+          <label class="form-label" for="signup-name">Full Name</label>
+          <div class="input-with-icon-wrap">
+            <i class="fas fa-user input-lead-icon"></i>
+            <input type="text" id="signup-name" class="form-input" placeholder="e.g. Rahul Sharma" required autocomplete="name">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="signup-email">Email Address</label>
+          <div class="input-with-icon-wrap">
+            <i class="fas fa-envelope input-lead-icon"></i>
+            <input type="email" id="signup-email" class="form-input" placeholder="name@example.com" required autocomplete="email">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="signup-phone">Mobile Number (+91)</label>
+          <div class="input-with-icon-wrap">
+            <i class="fas fa-phone input-lead-icon"></i>
+            <input type="tel" id="signup-phone" class="form-input" placeholder="+91 98XXXXXXXX" required autocomplete="tel">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="signup-password">Create Password</label>
+          <div class="input-with-icon-wrap">
+            <i class="fas fa-lock input-lead-icon"></i>
+            <input type="password" id="signup-password" class="form-input" placeholder="Minimum 6 characters" required autocomplete="new-password">
+            <button type="button" class="btn-toggle-password" data-target="signup-password" aria-label="Toggle password visibility">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+          <!-- Strength Bar -->
+          <div class="password-strength-container">
+            <div class="password-strength-bar">
+              <div class="password-strength-fill" id="password-strength-fill"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.68rem; color: var(--text-muted);">Strength:</span>
+              <span class="password-strength-text" id="password-strength-text">Enter password</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="auth-form-meta">
+          <label class="auth-checkbox-label" style="font-size: 0.76rem;">
+            <input type="checkbox" id="signup-terms" checked required>
+            <span>I agree to Hotel Terms & Direct Booking Privacy Policy</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; padding: 0.8rem 1.25rem; font-size: 0.95rem; justify-content: center;">
+          <i class="fas fa-user-check"></i> Create Account & Save 10%
+        </button>
+
+        <p style="text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">
+          Already registered? <a href="#" onclick="event.preventDefault(); document.getElementById('tab-btn-signin').click();" style="color: var(--accent); font-weight: 700;">Sign In here</a>
+        </p>
+      </form>
+
+      <!-- 3. LOGGED-IN ACCOUNT OVERVIEW CONTAINER -->
+      <div id="auth-account-overview" style="display: none;"></div>
+
+    </div>
+  </main>
+
+  <!-- ========================================================================
+       GLOBAL FOOTER
+       ======================================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="brand-logo" style="margin-bottom: 1rem;">
+            <div class="logo-icon"><i class="fas fa-hotel"></i></div>
+            <div class="brand-text">
+              <span class="brand-name">Hotel Waidhan BnB</span>
+              <span class="brand-tagline">Waidhan, Singrauli (MP)</span>
+            </div>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); max-width: 320px; line-height: 1.6;">
+            Premier budget, VIP and corporate accommodation in Waidhan Singrauli. Spotless hygiene, warm Indian hospitality, 24/7 power backup, and high-speed Wi-Fi.
+          </p>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="rooms.html">Rooms & Dormitories</a></li>
+            <li><a href="about.html">About Hotel</a></li>
+            <li><a href="contact.html">Contact Reception</a></li>
+            <li><a href="login.html">Sign In / Register</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Contact & Help</h4>
+          <ul class="footer-links">
+            <li><i class="fas fa-phone" style="color: var(--accent);"></i> +91 78790 28316</li>
+            <li><i class="fas fa-phone" style="color: var(--accent);"></i> +91 97702 36735</li>
+            <li><i class="fas fa-phone" style="color: var(--accent);"></i> +91 91093 02812</li>
+            <li><i class="fas fa-envelope" style="color: var(--accent);"></i> reservations@hotelwaidhanbnb.com</li>
+            <li><i class="fas fa-map-marker-alt" style="color: var(--accent);"></i> Near Waidhan Bus Stand, Singrauli MP</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Hotel Waidhan BnB. All Rights Reserved. Clean & Safe Hotel in Waidhan, Singrauli.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       FLOATING SOCIAL MEDIA DOCK (YouTube, Instagram, Facebook - Left Side)
+       ======================================================================== -->
+  <aside class="floating-social-dock" aria-label="Official Social Channels">
+    <a href="https://www.youtube.com/@HotelWaidhanBnB" target="_blank" rel="noopener noreferrer" class="social-dock-btn youtube" title="Watch on YouTube" aria-label="YouTube">
+      <i class="fab fa-youtube"></i>
+      <span class="social-tooltip">YouTube</span>
+    </a>
+    <a href="https://www.instagram.com/hotelwaidhanbnb" target="_blank" rel="noopener noreferrer" class="social-dock-btn instagram" title="Follow on Instagram" aria-label="Instagram">
+      <i class="fab fa-instagram"></i>
+      <span class="social-tooltip">Instagram</span>
+    </a>
+    <a href="https://www.facebook.com/hotelwaidhanbnb" target="_blank" rel="noopener noreferrer" class="social-dock-btn facebook" title="Connect on Facebook" aria-label="Facebook">
+      <i class="fab fa-facebook-f"></i>
+      <span class="social-tooltip">Facebook</span>
+    </a>
+  </aside>
+
+  <!-- ========================================================================
+       FLOATING RIGHT-SIDE BUTTONS (WhatsApp & Pooja Sharma Concierge)
+       ======================================================================== -->
+  <!-- Floating Right-Side WhatsApp Button -->
+  <a href="https://wa.me/917879028316?text=Hello%20Hotel%20Waidhan%20BnB%2C%20I%20want%20to%20enquire%20about%20room%20availability." target="_blank" rel="noopener" class="floating-whatsapp-btn" aria-label="Chat directly on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+    <span class="whatsapp-tooltip">Chat on WhatsApp</span>
+  </a>
+
+  <!-- Floating Staff Chat Button (Pooja Sharma - Right Side) -->
+  <button type="button" class="floating-staff-btn" id="btn-floating-staff-chat" aria-label="Open Staff Concierge Chat with Pooja Sharma">
+    <div class="staff-btn-avatar-wrap">
+      <img src="assets/staff-pooja.jpg" alt="Pooja Sharma - Hotel Waidhan Front Desk" class="staff-btn-avatar-img">
+      <span class="staff-btn-online-badge"></span>
+    </div>
+    <div class="staff-btn-content">
+      <span class="staff-btn-title">Chat with Pooja</span>
+      <span class="staff-btn-status"><span class="dot-live"></span> Front Desk • Online</span>
+    </div>
+  </button>
+
+  <!-- Mobile App-Style Bottom Navigation -->
+  <nav class="bottom-nav" aria-label="Mobile Bottom Navigation">
+    <a href="index.html" class="bottom-nav-item">
+      <i class="fas fa-home"></i>
+      <span>Home</span>
+    </a>
+    <a href="rooms.html" class="bottom-nav-item">
+      <i class="fas fa-bed"></i>
+      <span>Rooms</span>
+    </a>
+    <a href="rooms.html" class="bottom-nav-item center-action">
+      <div class="action-circle">
+        <i class="fas fa-calendar-check"></i>
+      </div>
+      <span>Book</span>
+    </a>
+    <a href="contact.html" class="bottom-nav-item">
+      <i class="fas fa-map-marker-alt"></i>
+      <span>Contact</span>
+    </a>
+    <a href="login.html" class="bottom-nav-item active" id="bottom-nav-auth-item">
+      <i class="far fa-user-circle"></i>
+      <span>Sign In</span>
+    </a>
+  </nav>
+
+  <!-- Application & Auth Scripts -->
+  <script src="js/app.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
