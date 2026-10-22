@@ -275,10 +275,10 @@ Place the following comprehensive Schema markup inside the `<head>` of your webs
       },
       "geo": {
         "@type": "GeoCoordinates",
-        "latitude": 24.0625,
-        "longitude": 82.6288
+        "latitude": 24.0629752,
+        "longitude": 82.6300981
       },
-      "hasMap": "https://maps.google.com/?cid=YOUR_GBP_CID_NUMBER",
+      "hasMap": "https://maps.app.goo.gl/gz9ZMdWVEUf4wPUc7",
       "amenityFeature": [
         { "@type": "LocationFeatureSpecification", "name": "Free High-Speed Wi-Fi", "value": true },
         { "@type": "LocationFeatureSpecification", "name": "Air Conditioning", "value": true },

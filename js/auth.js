@@ -95,6 +95,10 @@ function updateNavAuthUI(user) {
           <button type="button" class="user-dropdown-item text-danger" id="btn-user-logout"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
         </div>
       </div>
+      <a href="rooms.html" class="btn-book-nav" id="btn-header-book" title="Book a Stay at Hotel Waidhan BnB">
+        <i class="fas fa-calendar-check"></i>
+        <span>Book</span>
+      </a>
     `;
 
     authNavContainers.forEach(container => {
@@ -141,11 +145,11 @@ function updateNavAuthUI(user) {
     autoPopulateBookingModal(user);
 
   } else {
-    // User is a guest
+    // User is a guest (not logged in) - Desktop top nav shows Book button that redirects to login first
     const guestHtml = `
-      <a href="login.html" class="btn-auth-nav" title="Sign In or Create Account">
-        <i class="far fa-user-circle"></i>
-        <span>Sign In</span>
+      <a href="login.html?redirect=rooms.html&intent=book" class="btn-book-nav" id="btn-header-book" title="Book a Stay (Sign in or create account to proceed)">
+        <i class="fas fa-calendar-check"></i>
+        <span>Book</span>
       </a>
     `;
 
@@ -156,8 +160,8 @@ function updateNavAuthUI(user) {
     if (drawerAuthSlot) {
       drawerAuthSlot.innerHTML = `
         <div style="padding: 0.5rem 0 1rem;">
-          <a href="login.html" class="btn-primary" style="width: 100%; text-align: center; justify-content: center;">
-            <i class="far fa-user-circle"></i> Sign In / Create Account
+          <a href="login.html?redirect=rooms.html&intent=book" class="btn-primary" style="width: 100%; text-align: center; justify-content: center; font-weight: 800;">
+            <i class="fas fa-calendar-check"></i> Book Now (Sign In / Register)
           </a>
         </div>
       `;
@@ -165,11 +169,11 @@ function updateNavAuthUI(user) {
 
     if (bottomNavAuth) {
       bottomNavAuth.innerHTML = `
-        <i class="far fa-user-circle"></i>
-        <span>Sign In</span>
+        <i class="fas fa-calendar-check"></i>
+        <span>Book</span>
       `;
-      bottomNavAuth.href = "login.html";
-      bottomNavAuth.title = "Sign In or Register";
+      bottomNavAuth.href = "login.html?redirect=rooms.html&intent=book";
+      bottomNavAuth.title = "Book a Stay (Sign in or register)";
     }
   }
 }
@@ -259,6 +263,15 @@ function initAuthUI() {
   const formOtp = document.getElementById('form-otp');
   const formSignUp = document.getElementById('form-signup');
   const accountOverview = document.getElementById('auth-account-overview');
+
+  // Display Booking Intent Step 1 Banner if coming from Book button
+  const urlParams = new URLSearchParams(window.location.search);
+  const intent = urlParams.get('intent');
+  const redirect = urlParams.get('redirect');
+  const bookingBanner = document.getElementById('auth-booking-intent-banner');
+  if (bookingBanner && (intent === 'book' || redirect === 'rooms.html')) {
+    bookingBanner.style.display = 'flex';
+  }
 
   // Toggle Tabs between Password Sign In, Mobile OTP, and Create Account
   function switchTab(activeTab, activeForm) {

@@ -177,6 +177,22 @@ function initThemeSystem() {
   const drawerPills = document.querySelectorAll('.drawer-theme-pill');
   const metaColorScheme = document.querySelector('meta[name="color-scheme"]');
 
+  // Media queries to detect OS system preference
+  const lightMedia = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
+  const darkMedia = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+
+  function getSystemScheme() {
+    if (window.matchMedia) {
+      if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+        return 'light';
+      }
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+    }
+    return 'dark';
+  }
+
   // Stored preference ('light' | 'dark' | 'system')
   let currentPref = localStorage.getItem('theme_preference') || 'system';
 
@@ -190,12 +206,17 @@ function initThemeSystem() {
       }
     }
 
-    // Apply data-theme attribute
-    document.documentElement.setAttribute('data-theme', pref);
+    // Determine effective theme: if 'system', resolve based on OS preference (light or dark)
+    const effective = pref === 'system' ? getSystemScheme() : pref;
+
+    // Apply data-theme to effective theme so all existing CSS light/dark rules match automatically
+    document.documentElement.setAttribute('data-theme', effective);
+    document.documentElement.setAttribute('data-theme-preference', pref);
+    document.documentElement.setAttribute('data-theme-applied', effective);
 
     // Update <meta name="color-scheme">
     if (metaColorScheme) {
-      metaColorScheme.content = pref === 'system' ? 'light dark' : pref;
+      metaColorScheme.content = pref === 'system' ? 'light dark' : effective;
     }
 
     // Update Desktop Header Dropdown Trigger Icon & Label
@@ -210,8 +231,8 @@ function initThemeSystem() {
         headerText.textContent = 'Dark';
       } else {
         headerIcon.className = 'fas fa-laptop';
-        headerIcon.style.color = 'var(--accent)';
-        headerText.textContent = 'System';
+        headerIcon.style.color = '#fbbf24';
+        headerText.textContent = effective === 'light' ? 'System (Light)' : 'System (Dark)';
       }
     }
 
@@ -239,6 +260,24 @@ function initThemeSystem() {
       }
     });
   }
+
+  // Listen for device system preference changes in real time (e.g. user toggles OS light/dark mode)
+  function handleSystemThemeChange() {
+    const currentStored = localStorage.getItem('theme_preference') || 'system';
+    if (currentStored === 'system') {
+      applyTheme('system', false);
+    }
+  }
+
+  [lightMedia, darkMedia].forEach(mq => {
+    if (mq) {
+      if (mq.addEventListener) {
+        mq.addEventListener('change', handleSystemThemeChange);
+      } else if (mq.addListener) {
+        mq.addListener(handleSystemThemeChange);
+      }
+    }
+  });
 
   // Toggle desktop dropdown
   if (btnDropdown && dropdownWrap) {
@@ -289,15 +328,6 @@ function initThemeSystem() {
         applyTheme(chosen, true);
       }
     });
-  });
-
-  // Listen to OS System Color Scheme changes in real time
-  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-  mediaQuery.addEventListener('change', () => {
-    const currentStored = localStorage.getItem('theme_preference') || 'system';
-    if (currentStored === 'system') {
-      applyTheme('system', false);
-    }
   });
 
   // Run on initial load
@@ -1287,7 +1317,7 @@ Tone: Warm, welcoming, respectful Indian hospitality ("Namaste!"), concise, conv
       • <strong>Shaktinagar Station:</strong> ~12 km.<br>
       We are located on the main road in the city center of Waidhan!
       <div class="bot-action-buttons">
-        <a href="https://maps.google.com/?q=Hotel+Waidhan+BnB+Singrauli" target="_blank" class="bot-action-btn"><i class="fas fa-map-location-dot"></i> Google Maps Directions</a>
+        <a href="https://maps.app.goo.gl/gz9ZMdWVEUf4wPUc7" target="_blank" rel="noopener noreferrer" class="bot-action-btn"><i class="fas fa-map-location-dot"></i> Open Hotel in Google Maps</a>
       </div>`;
     }
 

@@ -7,13 +7,14 @@
   <script>
     (function() {
       try {
-        const theme = localStorage.getItem('theme_preference') || 'system';
-        document.documentElement.setAttribute('data-theme', theme);
-        const resolved = theme === 'system'
-          ? (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark')
-          : theme;
-        const meta = document.querySelector('meta[name="color-scheme"]');
-        if (meta) meta.content = theme === 'system' ? 'light dark' : theme;
+        var pref = localStorage.getItem('theme_preference') || 'system';
+        var isLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+        var effective = pref === 'system' ? (isLight ? 'light' : 'dark') : pref;
+        document.documentElement.setAttribute('data-theme', effective);
+        document.documentElement.setAttribute('data-theme-preference', pref);
+        document.documentElement.setAttribute('data-theme-applied', effective);
+        var meta = document.querySelector('meta[name="color-scheme"]');
+        if (meta) meta.content = pref === 'system' ? 'light dark' : effective;
       } catch (e) {}
     })();
   </script>
@@ -53,7 +54,13 @@
         "addressRegion": "Madhya Pradesh",
         "postalCode": "486886",
         "addressCountry": "IN"
-      }
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 24.0629752,
+        "longitude": 82.6300981
+      },
+      "hasMap": "https://maps.app.goo.gl/gz9ZMdWVEUf4wPUc7"
     }
   }
   </script>
@@ -82,8 +89,9 @@
         <a href="rooms.html" class="nav-link">Rooms & Dorms</a>
         <a href="about.html" class="nav-link">About Us</a>
         <a href="contact.html" class="nav-link active">Contact</a>
-        <a href="index.html#banquet" class="nav-link">Banquet</a>
+        <a href="index.html#banquet" class="nav-link">Banquet Hall</a>
         <a href="index.html#restaurant" class="nav-link">Restaurant</a>
+        <a href="index.html#gallery" class="nav-link">Gallery</a>
       </nav>
 
       <!-- Action Buttons -->
@@ -147,17 +155,13 @@
           </div>
         </div>
 
-        <!-- Dynamic User Auth Nav Slot -->
+        <!-- Dynamic User Auth Nav Slot (Book CTA -> Redirects to Login/Account if guest) -->
         <div class="auth-nav-slot">
-          <a href="login.html" class="btn-auth-nav">
-            <i class="far fa-user-circle"></i>
-            <span>Sign In</span>
+          <a href="login.html?redirect=rooms.html&intent=book" class="btn-book-nav" id="btn-header-book" title="Book a Stay at Hotel Waidhan BnB">
+            <i class="fas fa-calendar-check"></i>
+            <span>Book</span>
           </a>
         </div>
-
-        <a href="rooms.html" class="btn-primary" style="display: none; @media(min-width: 992px){display: inline-flex;}">
-          <i class="fas fa-calendar-check"></i> Book Direct
-        </a>
 
         <!-- Mobile Hamburger Button -->
         <button class="btn-hamburger" id="btn-hamburger" aria-label="Toggle Navigation Menu">
@@ -197,9 +201,11 @@
         <a href="rooms.html" class="drawer-nav-link"><i class="fas fa-bed"></i> Rooms & Dormitory</a>
         <a href="about.html" class="drawer-nav-link"><i class="fas fa-info-circle"></i> About Us</a>
         <a href="contact.html" class="drawer-nav-link active"><i class="fas fa-map-marker-alt"></i> Contact & Location</a>
-        <a href="login.html" class="drawer-nav-link"><i class="fas fa-user-shield"></i> Guest Portal / Sign In</a>
-        <a href="index.html#banquet" class="drawer-nav-link"><i class="fas fa-glass-cheers"></i> Banquet & Events</a>
+        <a href="index.html#banquet" class="drawer-nav-link"><i class="fas fa-glass-cheers"></i> Banquet Hall</a>
         <a href="index.html#restaurant" class="drawer-nav-link"><i class="fas fa-utensils"></i> Restaurant & Dining</a>
+        <a href="index.html#gallery" class="drawer-nav-link"><i class="fas fa-images"></i> Photo Gallery</a>
+        <a href="https://maps.app.goo.gl/gz9ZMdWVEUf4wPUc7" target="_blank" rel="noopener noreferrer" class="drawer-nav-link"><i class="fas fa-map-location-dot" style="color: #fbbf24;"></i> Open in Google Maps</a>
+        <a href="login.html" class="drawer-nav-link"><i class="fas fa-user-shield"></i> Guest Portal / Sign In</a>
       </nav>
 
       <!-- Theme Switcher for Mobile Drawer -->
@@ -351,13 +357,14 @@
           <div style="background: var(--bg-card); padding: 2rem; border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: 2rem;">
             <h2 style="font-size: 1.4rem; font-family: var(--font-heading); color: var(--text-main); margin-bottom: 0.75rem;">Hotel Location</h2>
             
-            <div style="display: flex; gap: 0.75rem; margin-bottom: 1.25rem;">
-              <i class="fas fa-map-marker-alt" style="color: var(--accent); font-size: 1.2rem; margin-top: 3px;"></i>
+            <a href="https://maps.app.goo.gl/gz9ZMdWVEUf4wPUc7" target="_blank" rel="noopener noreferrer" style="display: flex; gap: 0.75rem; margin-bottom: 1.25rem; text-decoration: none; color: inherit;" title="Open Hotel in Google Maps">
+              <i class="fas fa-map-marker-alt" style="color: var(--accent); font-size: 1.3rem; margin-top: 3px;"></i>
               <div>
-                <strong style="color: var(--text-main); font-size: 0.95rem;">Hotel Waidhan BnB</strong><br>
+                <strong style="color: var(--text-main); font-size: 1rem;">Hotel Waidhan BnB</strong><br>
                 <span style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.5;">Near Inter-State Bus Stand, Ambedkar Chowk, Waidhan, Singrauli, Madhya Pradesh 486886</span>
+                <span style="display: inline-flex; align-items: center; gap: 4px; color: var(--accent); font-size: 0.8rem; font-weight: 700; margin-top: 4px;"><i class="fas fa-external-link-alt"></i> View on Google Maps</span>
               </div>
-            </div>
+            </a>
 
             <div style="display: flex; gap: 0.75rem; margin-bottom: 1.25rem;">
               <i class="fas fa-envelope" style="color: var(--accent); font-size: 1.2rem; margin-top: 3px;"></i>
@@ -367,12 +374,34 @@
               </div>
             </div>
 
-            <div style="display: flex; gap: 0.75rem;">
+            <div style="display: flex; gap: 0.75rem; margin-bottom: 1.25rem;">
               <i class="fas fa-clock" style="color: var(--accent); font-size: 1.2rem; margin-top: 3px;"></i>
               <div>
                 <strong style="color: var(--text-main); font-size: 0.95rem;">Operating Hours</strong><br>
                 <span style="color: var(--text-muted); font-size: 0.88rem;">Reception Open 24 Hours • 7 Days a Week • 365 Days</span>
               </div>
+            </div>
+
+            <!-- Primary Google Maps Action Button -->
+            <a href="https://maps.app.goo.gl/gz9ZMdWVEUf4wPUc7" target="_blank" rel="noopener noreferrer" class="btn-primary" style="width: 100%; justify-content: center; text-decoration: none; font-size: 0.95rem; padding: 0.85rem; box-shadow: 0 4px 18px rgba(212, 175, 55, 0.4);">
+              <i class="fas fa-map-location-dot"></i> Open Hotel in Google Maps App
+            </a>
+
+            <!-- Embedded Interactive Google Map -->
+            <div style="margin-top: 1.25rem; border-radius: 12px; overflow: hidden; border: 1.5px solid var(--accent); position: relative; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);">
+              <iframe
+                src="https://maps.google.com/maps?q=24.0629752,82.6300981&z=16&output=embed"
+                width="100%"
+                height="240"
+                style="border: 0; display: block;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Hotel Waidhan BnB Google Maps Location">
+              </iframe>
+              <a href="https://maps.app.goo.gl/gz9ZMdWVEUf4wPUc7" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: var(--bg-surface); padding: 0.65rem; color: var(--accent); font-weight: 700; font-size: 0.86rem; text-decoration: none; border-top: 1px solid var(--border-light);">
+                <i class="fas fa-external-link-alt"></i> Tap to View Full Screen in Google Maps
+              </a>
             </div>
           </div>
 
@@ -395,6 +424,12 @@
             <div style="border-left: 2px solid var(--accent); padding-left: 1rem;">
               <strong style="color: var(--text-main); font-size: 0.9rem;">From NTPC Vindhyanagar:</strong>
               <p style="color: var(--text-muted); font-size: 0.82rem; margin-top: 2px;">Take the 4-lane Highway directly into Waidhan center (10 km, 15 mins).</p>
+            </div>
+
+            <div style="margin-top: 1.25rem; text-align: center;">
+              <a href="https://maps.app.goo.gl/gz9ZMdWVEUf4wPUc7" target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-weight: 700; font-size: 0.88rem; text-decoration: underline; display: inline-flex; align-items: center; gap: 0.4rem;">
+                <i class="fas fa-diamond-turn-right"></i> Start GPS Driving Navigation on Google Maps
+              </a>
             </div>
           </div>
         </div>
@@ -437,7 +472,7 @@
             <li><i class="fas fa-phone" style="color: var(--accent);"></i> +91 78790 28316</li>
             <li><i class="fas fa-phone" style="color: var(--accent);"></i> +91 97702 36735</li>
             <li><i class="fas fa-phone" style="color: var(--accent);"></i> +91 91093 02812</li>
-            <li><i class="fas fa-map-marker-alt" style="color: var(--accent);"></i> Near Waidhan Bus Stand, Singrauli MP</li>
+            <li><a href="https://maps.app.goo.gl/gz9ZMdWVEUf4wPUc7" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;"><i class="fas fa-map-marker-alt" style="color: var(--accent);"></i> Near Waidhan Bus Stand, Singrauli MP (Open Maps)</a></li>
           </ul>
         </div>
       </div>

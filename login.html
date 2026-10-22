@@ -7,13 +7,14 @@
   <script>
     (function() {
       try {
-        const theme = localStorage.getItem('theme_preference') || 'system';
-        document.documentElement.setAttribute('data-theme', theme);
-        const resolved = theme === 'system'
-          ? (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark')
-          : theme;
-        const meta = document.querySelector('meta[name="color-scheme"]');
-        if (meta) meta.content = theme === 'system' ? 'light dark' : theme;
+        var pref = localStorage.getItem('theme_preference') || 'system';
+        var isLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+        var effective = pref === 'system' ? (isLight ? 'light' : 'dark') : pref;
+        document.documentElement.setAttribute('data-theme', effective);
+        document.documentElement.setAttribute('data-theme-preference', pref);
+        document.documentElement.setAttribute('data-theme-applied', effective);
+        var meta = document.querySelector('meta[name="color-scheme"]');
+        if (meta) meta.content = pref === 'system' ? 'light dark' : effective;
       } catch (e) {}
     })();
   </script>
@@ -59,6 +60,9 @@
         <a href="rooms.html" class="nav-link">Rooms & Dorms</a>
         <a href="about.html" class="nav-link">About Us</a>
         <a href="contact.html" class="nav-link">Contact</a>
+        <a href="index.html#banquet" class="nav-link">Banquet Hall</a>
+        <a href="index.html#restaurant" class="nav-link">Restaurant</a>
+        <a href="index.html#gallery" class="nav-link">Gallery</a>
       </nav>
 
       <!-- Action Buttons -->
@@ -122,18 +126,13 @@
           </div>
         </div>
 
-        <!-- Dynamic User Auth Nav Slot -->
+        <!-- Dynamic User Auth Nav Slot (Book CTA -> Redirects to Login/Account if guest) -->
         <div class="auth-nav-slot">
-          <a href="login.html" class="btn-auth-nav active">
-            <i class="far fa-user-circle"></i>
-            <span>Sign In</span>
+          <a href="login.html?redirect=rooms.html&intent=book" class="btn-book-nav" id="btn-header-book" title="Book a Stay at Hotel Waidhan BnB">
+            <i class="fas fa-calendar-check"></i>
+            <span>Book</span>
           </a>
         </div>
-
-        <!-- Book Direct CTA -->
-        <a href="rooms.html" class="btn-primary" style="display: none; @media(min-width: 992px){display: inline-flex;}">
-          <i class="fas fa-calendar-check"></i> Book Direct
-        </a>
         
         <!-- Mobile Hamburger Button -->
         <button class="btn-hamburger" id="btn-hamburger" aria-label="Toggle Navigation Menu">
@@ -173,6 +172,10 @@
         <a href="rooms.html" class="drawer-nav-link"><i class="fas fa-bed"></i> Rooms & Dormitory</a>
         <a href="about.html" class="drawer-nav-link"><i class="fas fa-info-circle"></i> About Us</a>
         <a href="contact.html" class="drawer-nav-link"><i class="fas fa-map-marker-alt"></i> Contact & Location</a>
+        <a href="index.html#banquet" class="drawer-nav-link"><i class="fas fa-glass-cheers"></i> Banquet Hall</a>
+        <a href="index.html#restaurant" class="drawer-nav-link"><i class="fas fa-utensils"></i> Restaurant & Dining</a>
+        <a href="index.html#gallery" class="drawer-nav-link"><i class="fas fa-images"></i> Photo Gallery</a>
+        <a href="https://maps.app.goo.gl/gz9ZMdWVEUf4wPUc7" target="_blank" rel="noopener noreferrer" class="drawer-nav-link"><i class="fas fa-map-location-dot" style="color: #fbbf24;"></i> Open in Google Maps</a>
         <a href="login.html" class="drawer-nav-link active"><i class="fas fa-user-shield"></i> Guest Portal</a>
       </nav>
 
@@ -220,6 +223,17 @@
         </div>
         <h1 class="auth-card-title">Welcome to Waidhan BnB</h1>
         <p class="auth-card-subtitle">Sign in or register to unlock instant 10% direct booking discount and express check-in.</p>
+      </div>
+
+      <!-- Booking Intent Step 1 Banner (Displayed when customer clicked Book button) -->
+      <div class="auth-booking-intent-banner" id="auth-booking-intent-banner" style="display: none;">
+        <i class="fas fa-calendar-check" style="color: #fbbf24; font-size: 1.4rem; flex-shrink: 0;"></i>
+        <div>
+          <strong style="font-size: 0.95rem; display: block; margin-bottom: 2px;">Step 1: Sign in or Create Account to Book</strong>
+          <span style="font-size: 0.84rem; line-height: 1.45; display: block;">
+            To confirm your room reservation and unlock your <strong>10% instant direct booking discount</strong>, please sign in or register below. You will be automatically redirected to select your room!
+          </span>
+        </div>
       </div>
 
       <!-- Tab Switcher: Sign In vs Mobile OTP vs Create Account -->
@@ -442,7 +456,7 @@
             <li><i class="fas fa-phone" style="color: var(--accent);"></i> +91 97702 36735</li>
             <li><i class="fas fa-phone" style="color: var(--accent);"></i> +91 91093 02812</li>
             <li><i class="fas fa-envelope" style="color: var(--accent);"></i> reservations@hotelwaidhanbnb.com</li>
-            <li><i class="fas fa-map-marker-alt" style="color: var(--accent);"></i> Near Waidhan Bus Stand, Singrauli MP</li>
+            <li><a href="https://maps.app.goo.gl/gz9ZMdWVEUf4wPUc7" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;"><i class="fas fa-map-marker-alt" style="color: var(--accent);"></i> Near Waidhan Bus Stand, Singrauli MP (Open Maps)</a></li>
           </ul>
         </div>
       </div>
